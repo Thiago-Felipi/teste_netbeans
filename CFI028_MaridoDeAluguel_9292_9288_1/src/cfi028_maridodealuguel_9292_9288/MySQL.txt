@@ -1,0 +1,115 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 25/06/2025 às 14:33
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+--
+-- Banco de dados: `maridoaluguel`
+--
+CREATE DATABASE IF NOT EXISTS `maridoaluguel` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `maridoaluguel`;
+-- --------------------------------------------------------
+--
+-- Estrutura para tabela `lista`
+--
+DROP TABLE IF EXISTS `lista`;
+CREATE TABLE IF NOT EXISTS `lista` (
+ `idlista` int(11) NOT NULL AUTO_INCREMENT,
+ `idPrestador` int(11) NOT NULL,
+ `idServico` int(11) NOT NULL,
+ PRIMARY KEY (`idlista`,`idPrestador`,`idServico`),
+ KEY `fk_lista_Prestador_idx` (`idPrestador`),
+ KEY `fk_lista_Servico1_idx` (`idServico`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+--
+-- Despejando dados para a tabela `lista`
+--
+INSERT INTO `lista` (`idlista`, `idPrestador`, `idServico`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3),
+(4, 4, 4),
+(5, 5, 5),
+(6, 6, 6),
+(7, 7, 7),
+(8, 8, 8),
+(9, 9, 9),
+(10, 10, 10);
+-- --------------------------------------------------------
+--
+-- Estrutura para tabela `prestador`
+--
+DROP TABLE IF EXISTS `prestador`;
+CREATE TABLE IF NOT EXISTS `prestador` (
+ `idPrestador` int(11) NOT NULL AUTO_INCREMENT,
+ `Nome` varchar(45) DEFAULT NULL,
+ `Endereco` varchar(45) DEFAULT NULL,
+ `Telefone` varchar(45) DEFAULT NULL,
+ `Pontuacao` decimal(7,2) DEFAULT NULL,
+ PRIMARY KEY (`idPrestador`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+--
+-- Despejando dados para a tabela `prestador`
+--
+INSERT INTO `prestador` (`idPrestador`, `Nome`, `Endereco`, `Telefone`, `Pontuacao`) VALUES
+(1, 'Carlos Silva', 'Rua das Flores, 123', '31999998888', 4.50),
+(2, 'João Souza', 'Av. Brasil, 456', '31988887777', 4.20),
+(3, 'Maria Oliveira', 'Rua A, 789', '31977776666', 4.90),
+(4, 'Pedro Santos', 'Rua B, 321', '31966665555', 3.80),
+(5, 'Luciana Costa', 'Av. Central, 654', '31955554444', 4.70),
+(6, 'Fernando Rocha', 'Rua C, 987', '31944443333', 4.30),
+(7, 'Ana Paula Lima', 'Rua D, 111', '31933332222', 4.10),
+(8, 'Rogério Mendes', 'Rua E, 222', '31922221111', 4.00),
+(9, 'Beatriz Fonseca', 'Rua F, 333', '31911110000', 4.60),
+(10, 'Cláudio Martins', 'Av. Independência, 444', '31900009999', 3.90);
+-- --------------------------------------------------------
+--
+-- Estrutura para tabela `servico`
+--
+DROP TABLE IF EXISTS `servico`;
+CREATE TABLE IF NOT EXISTS `servico` (
+ `idServico` int(11) NOT NULL AUTO_INCREMENT,
+ `tipoServico` varchar(45) DEFAULT NULL,
+ `valorHora` varchar(45) DEFAULT NULL,
+ `detalhes` varchar(200) DEFAULT NULL,
+ PRIMARY KEY (`idServico`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+--
+-- Despejando dados para a tabela `servico`
+--
+INSERT INTO `servico` (`idServico`, `tipoServico`, `valorHora`, `detalhes`) VALUES
+(1, 'Faxineiro', '20.00', 'Limpeza residencial, organização de ambientes'),
+(2, 'Pedreiro', '35.00', 'Construção e reforma de alvenaria'),
+(3, 'Pintor', '30.00', 'Pintura interna e externa'),
+(4, 'Eletricista', '40.00', 'Instalação e manutenção elétrica'),
+(5, 'Marceneiro', '45.00', 'Móveis planejados e sob medida'),
+(6, 'Encanador', '38.00', 'Reparo de encanamentos e instalações hidráulicas'),
+(7, 'Jardineiro', '25.00', 'Manutenção de jardins e poda'),
+(8, 'Montador de Móveis', '28.00', 'Montagem de móveis residenciais e corporativos'),
+(9, 'Vidraceiro', '32.00', 'Instalação de vidros e janelas'),
+(10, 'Gesseiro', '36.00', 'Instalação de drywall e sancas');
+--
+-- Restrições para tabelas despejadas
+--
+--
+-- Restrições para tabelas `lista`
+--
+ALTER TABLE `lista`
+ ADD CONSTRAINT `fk_lista_Prestador` FOREIGN KEY (`idPrestador`) REFERENCES `prestador` (`idPrestador`) ON DELETE
+NO ACTION ON UPDATE NO ACTION,
+ ADD CONSTRAINT `fk_lista_Servico1` FOREIGN KEY (`idServico`) REFERENCES `servico` (`idServico`) ON DELETE NO
+ACTION ON UPDATE NO ACTION;
+COMMIT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
